@@ -1,0 +1,15 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SampleApp.Core.Domain.Students.Entities;
+
+namespace SampleApp.Infrastructure.Data.EF.Command.Students.Configs
+{
+    internal class AddressConfig : IEntityTypeConfiguration<Address>
+    {
+        public void Configure(EntityTypeBuilder<Address> entityType)
+        {
+            entityType
+                .HasKey(address => address.Id);
+        }
+    }
+}
