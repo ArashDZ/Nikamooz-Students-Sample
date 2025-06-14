@@ -1,14 +1,10 @@
-﻿using SampleApp.Core.Contracts.Students.Queries;
+﻿using SampleApp.Core.Contracts.Students.Exceptions;
+using SampleApp.Core.Contracts.Students.Queries;
 using SampleApp.Core.Domain.Students.Entities;
-using SampleApp.Core.RequestResponse.Addresses;
+using SampleApp.Core.Domain.Students.Enums;
 using SampleApp.Core.RequestResponse.Students;
 using SampleApp.Infrastructure.Data.EF.Command.Context;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zamin.Infra.Data.Sql.Commands;
 
 namespace SampleApp.Infrastructure.Data.EF.Command.Students.Repositories
@@ -18,6 +14,11 @@ namespace SampleApp.Infrastructure.Data.EF.Command.Students.Repositories
     {
         public async Task<StudentViewModel> AddStudent([NotNull] StudentAddModel student)
         {
+            if (student.Addresses?.Any(address => address.AddressType == AddressType.Home) != true)
+            {
+                throw new NoHomeAddressException();
+            }
+
             List<StudentAddress> studentAddresses = student.Addresses?.Select(address =>
             {
                 var newAddresss = new Address
