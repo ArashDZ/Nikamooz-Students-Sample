@@ -19,6 +19,11 @@ string commandConnectionString = builder.Configuration.GetConnectionString("Samp
     ?? throw new InvalidConfigurationException("SampleAppCommand connection string is not provided!");
 
 builder.Services.AddSampleAppCommandDbContext(commandConnectionString);
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo() { Title = "Sample App"});
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,5 +37,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGet("", () => "SampleApp is working.");
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.Run();
