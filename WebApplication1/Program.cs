@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using SampleApp.Endpoints.Api.CustomDecorators;
 using SampleApp.Infrastructure.Data.EF.Command;
 using SampleApp.Infrastructure.Data.EF.Query;
+using Zamin.Core.ApplicationServices.Commands;
 using Zamin.Core.ApplicationServices.Queries;
 using Zamin.Extensions.DependencyInjection;
 
@@ -25,8 +26,11 @@ string commandConnectionString = builder.Configuration.GetConnectionString("Samp
 builder.Services.AddSampleAppCommandDbContext(commandConnectionString);
 
 builder.Services.AddEfStudentQueryRepository();
+builder.Services.AddEfStudentCommandRepository();
 
 builder.Services.AddSingleton<QueryDispatcherDecorator, CustomQueryDecorator>();
+builder.Services.AddSingleton<CommandDispatcherDecorator, CustomCommandDecorator>();
+
 builder.Services.AddZaminApiCore("Zamin", "ZaminTemplate");
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddZaminParrotTranslator(builder.Configuration, "ParrotTranslator");

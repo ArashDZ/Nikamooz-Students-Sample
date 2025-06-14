@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using SampleApp.Core.Contracts.Students.Queries;
 using SampleApp.Infrastructure.Data.EF.Command.Context;
+using SampleApp.Infrastructure.Data.EF.Command.Students.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,7 @@ namespace SampleApp.Infrastructure.Data.EF.Command
 {
     public static class Extensions
     {
-        public static void AddSampleAppCommandDbContext(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddSampleAppCommandDbContext(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<SampleAppCommandDbContext>(options =>
             {
@@ -24,6 +26,15 @@ namespace SampleApp.Infrastructure.Data.EF.Command
                 // ثبت رویدادها
                 options.AddInterceptors(new AddAuditDataInterceptor());
             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddEfStudentCommandRepository(this IServiceCollection services)
+        {
+            services.AddScoped<IStudentCommandRepository, StudentCommandRepository>();
+
+            return services;
         }
     }
 }

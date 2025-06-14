@@ -17,9 +17,14 @@ namespace SampleApp.Endpoints.Api.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var query = new StudentGetByIdModel { Id = id };
-            return await Query<StudentGetByIdModel, StudentViewModel>(query);
+            return await Query<StudentGetByIdModel, StudentViewModel>(new() { Id = id });
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> Insert([FromBody] StudentAddModel command)
+        {
+            return await Create<StudentAddModel, StudentViewModel>(command);
+        }
     }
 }
