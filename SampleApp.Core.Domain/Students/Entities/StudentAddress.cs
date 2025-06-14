@@ -14,11 +14,7 @@ namespace SampleApp.Core.Domain.Students.Entities
         public int AddressId { get; set; }
         public int StudentId { get; set; }
         public AddressType AddressType { get; set; }
-
-        //[ForeignKey(nameof(StudentId))]
         public Student Student { get; set; }
-
-        //[ForeignKey(nameof(AddressId))]
         public Address Address { get; set; }
     }
 }

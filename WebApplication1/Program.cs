@@ -1,6 +1,10 @@
 using Microsoft.IdentityModel.Protocols.Configuration;
+using Microsoft.OpenApi.Models;
+using SampleApp.Endpoints.Api.CustomDecorators;
 using SampleApp.Infrastructure.Data.EF.Command;
 using SampleApp.Infrastructure.Data.EF.Query;
+using Zamin.Core.ApplicationServices.Queries;
+using Zamin.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,10 +24,22 @@ string commandConnectionString = builder.Configuration.GetConnectionString("Samp
 
 builder.Services.AddSampleAppCommandDbContext(commandConnectionString);
 
+builder.Services.AddEfStudentQueryRepository();
+
+builder.Services.AddSingleton<QueryDispatcherDecorator, CustomQueryDecorator>();
+builder.Services.AddZaminApiCore("Zamin", "ZaminTemplate");
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddZaminParrotTranslator(builder.Configuration, "ParrotTranslator");
+builder.Services.AddZaminMicrosoftSerializer();
+builder.Services.AddZaminWebUserInfoService(builder.Configuration, "WebUserInfo", true);
+builder.Services.AddZaminInMemoryCaching();
+builder.Services.AddZaminAutoMapperProfiles(builder.Configuration, "AutoMapper");
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo() { Title = "Sample App"});
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

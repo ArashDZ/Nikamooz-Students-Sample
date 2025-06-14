@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SampleApp.Core.Domain.Students.Entities;
 
 namespace SampleApp.Infrastructure.Data.EF.Query.Students.Configs
 {

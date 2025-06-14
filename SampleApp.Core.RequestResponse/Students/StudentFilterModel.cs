@@ -2,8 +2,8 @@
 
 namespace SampleApp.Core.RequestResponse.Students
 {
-    public class StudentFilterModel : IQuery<StudentListModel>
+    public class StudentFilterModel : IQuery<List<StudentListModel>>
     {
-        public byte Grade { get; set; }
+        public byte? Grade { get; set; }
     }
 }

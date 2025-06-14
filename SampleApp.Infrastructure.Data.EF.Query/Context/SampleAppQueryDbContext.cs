@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SampleApp.Core.Domain.Students.Entities;
+using SampleApp.Infrastructure.Data.EF.Query.Students;
 using SampleApp.Infrastructure.Data.EF.Query.Students.Configs;
 using Zamin.Infra.Data.Sql.Queries;
 

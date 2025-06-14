@@ -4,6 +4,7 @@ namespace SampleApp.Core.RequestResponse.Students
 {
     public class StudentViewModel
     {
+        public int Id { get; set; }
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public short StudentNo { get; set; }

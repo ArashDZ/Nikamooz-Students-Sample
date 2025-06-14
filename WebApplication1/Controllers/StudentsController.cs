@@ -11,7 +11,7 @@ namespace SampleApp.Endpoints.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] StudentFilterModel filter)
         {
-            return await Query<StudentFilterModel, StudentListModel>(filter);
+            return await Query<StudentFilterModel, List<StudentListModel>>(filter);
         }
 
         [HttpGet("{id:int}")]
