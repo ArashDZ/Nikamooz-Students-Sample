@@ -4,7 +4,7 @@ using Zamin.Core.ApplicationServices.Commands;
 using Zamin.Core.RequestResponse.Commands;
 using Zamin.Utilities;
 
-namespace SampleApp.Core.ApplicationService.Students
+namespace SampleApp.Core.ApplicationService.Students.Commands
 {
     public class AddStudentCommandHandler(ZaminServices zaminServices, IStudentCommandRepository repository)
         : CommandHandler<StudentAddModel, StudentViewModel>(zaminServices)
