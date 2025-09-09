@@ -3,9 +3,12 @@ using Microsoft.OpenApi.Models;
 using SampleApp.Endpoints.Api.CustomDecorators;
 using SampleApp.Infrastructure.Data.EF.Command;
 using SampleApp.Infrastructure.Data.EF.Query;
+using Serilog;
 using Zamin.Core.ApplicationServices.Commands;
+using Zamin.Core.ApplicationServices.Events;
 using Zamin.Core.ApplicationServices.Queries;
 using Zamin.Extensions.DependencyInjection;
+using Zamin.Utilities.SerilogRegistration.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +33,7 @@ builder.Services.AddEfStudentCommandRepository();
 
 builder.Services.AddSingleton<QueryDispatcherDecorator, CustomQueryDecorator>();
 builder.Services.AddSingleton<CommandDispatcherDecorator, CustomCommandDecorator>();
+builder.Services.AddSingleton<EventDispatcherDecorator, CustomEventDecorator>();
 
 builder.Services.AddZaminApiCore("Zamin", "ZaminTemplate");
 builder.Services.AddEndpointsApiExplorer();
@@ -38,6 +42,14 @@ builder.Services.AddZaminMicrosoftSerializer();
 builder.Services.AddZaminWebUserInfoService(builder.Configuration, "WebUserInfo", true);
 builder.Services.AddZaminInMemoryCaching();
 builder.Services.AddZaminAutoMapperProfiles(builder.Configuration, "AutoMapper");
+
+builder.AddZaminSerilog(config =>
+{
+    config.ApplicationName = builder.Configuration.GetValue<string>("ApplicationName");
+    config.ServiceId = builder.Configuration.GetValue<string>("ServiceId");
+    config.ServiceName = builder.Configuration.GetValue<string>("ServiceName");
+    config.ServiceVersion = builder.Configuration.GetValue<string>("ServiceVersion");
+});
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -59,7 +71,13 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapGet("", () => "SampleApp is working.");
 
+app.UseZaminApiExceptionHandler();
+app.UseSerilogRequestLogging();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.Run();
+SerilogExtensions.RunWithSerilogExceptionHandling(() =>
+{
+    app.Run();
+});

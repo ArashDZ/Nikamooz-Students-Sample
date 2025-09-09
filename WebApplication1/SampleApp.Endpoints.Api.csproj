@@ -27,6 +27,7 @@
     <PackageReference Include="Zamin.Extensions.Serializers.Microsoft" Version="9.0.0" />
     <PackageReference Include="Zamin.Extensions.Translations.Parrot" Version="9.0.0" />
     <PackageReference Include="Zamin.Extensions.UsersManagement" Version="9.0.0" />
+    <PackageReference Include="Zamin.Utilities.SerilogRegistration" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>

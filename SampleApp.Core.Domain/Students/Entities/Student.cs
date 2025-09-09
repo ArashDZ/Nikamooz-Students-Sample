@@ -1,4 +1,5 @@
 ﻿using SampleApp.Core.Domain.Students.Enums;
+using SampleApp.Core.Domain.Students.Events;
 using System.Diagnostics.CodeAnalysis;
 using Zamin.Core.Domain.Entities;
 
@@ -13,7 +14,13 @@ namespace SampleApp.Core.Domain.Students.Entities
         public virtual ICollection<StudentAddress> Addresses { get; set; } = [];
         public string? ImageId { get; set; }
 
-        private Student() : base() { }
+        private Student() : base() {
+            AddEvent(new StudentCreated
+            {
+                FirstName = FirstName,
+                LastName = LastName,
+            });
+        }
 
         public static Student Create(
             string firstName,
