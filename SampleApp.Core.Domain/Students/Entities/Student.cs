@@ -10,7 +10,7 @@ namespace SampleApp.Core.Domain.Students.Entities
         public string LastName { get; set; } = string.Empty;
         public short StudentNo { get; set; }
         public byte Grade { get; set; }
-        public List<StudentAddress> Addresses { get; set; } = [];
+        public virtual ICollection<StudentAddress> Addresses { get; set; } = [];
         public string? ImageId { get; set; }
 
         private Student() : base() { }
