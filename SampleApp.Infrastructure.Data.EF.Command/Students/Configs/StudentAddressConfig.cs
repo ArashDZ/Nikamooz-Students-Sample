@@ -15,7 +15,8 @@ namespace SampleApp.Infrastructure.Data.EF.Command.Students.Configs
                 .HasOne(studentAddress => studentAddress.Address)
                 .WithMany()
                 .HasForeignKey(studentAddress => studentAddress.AddressId)
-                .HasPrincipalKey(address => address.Id);
+                .HasPrincipalKey(address => address.Id)
+                .OnDelete(DeleteBehavior.Restrict);
 
             entityType
                 .HasOne(studentAddress => studentAddress.Student)
